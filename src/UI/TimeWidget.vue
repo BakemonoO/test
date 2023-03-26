@@ -37,6 +37,7 @@
 
       <div class="option_stop"
       @click="clearTime"
+      :style="isActive ? 'margin-left: 60px' : ''"
       >
       </div>
 
