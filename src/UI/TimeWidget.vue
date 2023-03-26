@@ -77,7 +77,11 @@
           if (this.seconds === 0) {
             return this.seconds;
           } else {
-            return `0${this.seconds}`
+            if (this.seconds > 9) {
+              return this.seconds
+            } else {
+              return `0${this.seconds}`
+            }
           }
         } else {
           if (this.seconds > 9) {
