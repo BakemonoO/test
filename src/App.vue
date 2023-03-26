@@ -33,6 +33,7 @@ export default {
 .widget-app {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   background: #353638;
   padding-top: 70px;
   min-height: 100vh;
