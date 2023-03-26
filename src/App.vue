@@ -1,26 +1,41 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div class="widget-app">
+  <widget-list/>
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import WidgetList from './WidgetList.vue'
 
 export default {
+  components: { WidgetList },
   name: 'App',
-  components: {
-    HelloWorld
-  }
 }
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+@font-face {
+  font-family: 'GothamPro';
+  src: url(fonts/gothampro.ttf);
 }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'GothamPro';
+  font-weight: 400;
+  line-height: 21px;
+  font-size: 21px;
+}
+
+.widget-app {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  background: #353638;
+  padding-top: 70px;
+}
+
 </style>
