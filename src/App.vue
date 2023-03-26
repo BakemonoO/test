@@ -35,7 +35,7 @@ export default {
   justify-content: center;
   align-items: flex-start;
   background: #353638;
-  padding-top: 70px;
+  padding: 70px 0;
   min-height: 100vh;
 }
 
