@@ -33,9 +33,9 @@ export default {
 .widget-app {
   display: flex;
   justify-content: center;
-  height: 100vh;
   background: #353638;
   padding-top: 70px;
+  min-height: 100vh;
 }
 
 </style>

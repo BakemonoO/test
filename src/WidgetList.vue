@@ -42,7 +42,7 @@ import TimeWidget from './UI/TimeWidget.vue'
 .widget-list {
   display: grid;
   width: 85%;
-  height: 250px;
+  min-height: 250px;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   grid-row-gap: 45px;
   justify-items: center;
