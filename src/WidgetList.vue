@@ -4,7 +4,6 @@
     <time-widget
     v-for="widget in widgetArray"
     :key="widget.id"
-    :timeSet="widget.timeSet"
     />
     <add-widget
     @create-widget="createWidget"
@@ -23,14 +22,13 @@ import TimeWidget from './UI/TimeWidget.vue'
 
     data() {
       return {
-        widgetArray: [{id:1, timeSet: [1,32,1]}, {id:2, timeSet: [0,4,32]}, {id:3}]
+        widgetArray: [{id:1}, {id:2}, {id:3}]
       }
     },
 
     methods: {
       createWidget() {
-        const widgetId = this.widgetArray[this.widgetArray.length - 1].id + 1
-        this.widgetArray.push({id: widgetId})
+        this.widgetArray.push({id: this.widgetArray.length})
 
       }
     }

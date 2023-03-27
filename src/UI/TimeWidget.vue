@@ -4,15 +4,15 @@
   >
     <div class="time-widget_value">
       <p class="hours"
-      v-if="hours > 0"
+      v-if="getHours > 0"
       >
-       {{hours > 9 ? hours + ':' : '0' + hours + ':'}}
+       {{getHours > 9 ? getHours + ':' : '0' + getHours + ':'}}
       </p>
 
       <p class="minutes"
-      v-if="hours > 0 ? minutes >= 0 :  minutes > 0"
+      v-if="getHours > 0 ? getMinutes >= 0 :  getMinutes > 0"
       >
-       {{minutes > 9 ? `${minutes}:` : `0${minutes}:`}}
+       {{getMinutes > 9 ? `${getMinutes}:` : `0${getMinutes}:`}}
       </p>
 
       <p class="seconds">
@@ -49,85 +49,73 @@
   export default {
     name: 'time-widget',
 
-    props: {
-      timeSet: Array
-    },
-
     data() {
       return {
+        startPoint: null,
+        currentPoint: null,
+        stopBefore: null,
+        stopAfter: null,
+        stopTimePoints: 0,
+        resultTime: null,
         isActive: false,
-        seconds:0,
-        minutes: 0,
-        hours: 0,
-        interval: null,
+        interval: null
       }
     },
 
     methods: {
       clearTime() {
+        clearInterval(this.interval)
         this.isActive = false
-        this.seconds = 0
-        this.minutes = 0
-        this.hours = 0
+        this.startPoint = null
+        this.currentPoint = null
+        this.stopAfter = null
+        this.stopTimePoints = 0
+        this.resultTime = null
+        setTimeout(() => {
+          this.stopBefore = null
+        }, 100);
       }
     },
 
     computed: {
-      getSeconds() {
-        if (this.hours === 0 && this.minutes === 0) {
-          if (this.seconds === 0) {
-            return this.seconds;
-          } else {
-            if (this.seconds > 9) {
-              return this.seconds
-            } else {
-              return `0${this.seconds}`
-            }
-          }
-        } else {
-          if (this.seconds > 9) {
-            return this.seconds;
-          } else {
-            return `0${this.seconds}`
-          }
-        }
-      }
+      getHours() {
+      if ((this.resultTime / 3600) !== 0) {
+        return Math.floor(this.resultTime / 3600)
+      } return 0;
     },
+
+      getMinutes() {
+        if ((this.resultTime / 60) !== 0) {
+          return Math.floor((this.resultTime - this.getHours * 3600) / 60)
+        } return 0;
+      },
+
+      getSeconds() {
+        const currentSeconds = this.resultTime - (this.getHours * 3600) - (this.getMinutes * 60)
+        return currentSeconds;
+      },
+  },
 
     watch: {
       isActive() {
         if (this.isActive === true) {
-          this.interval = setInterval((() => {
-            this.seconds += 1
-          }), 1000)
+          if (this.startPoint === null) {
+            this.startPoint = Date.now()
+          }
+          if (this.startPoint !== null && this.stopBefore !== null) {
+            this.stopAfter = Date.now()
+            this.stopTimePoints += this.stopAfter - this.stopBefore
+          }
+            this.interval = setInterval(() => {
+            this.currentPoint = Date.now()
+            this.resultTime = Math.floor((this.currentPoint - (this.startPoint + this.stopTimePoints)) / 1000) 
+          }, 1000)
         } else {
           clearInterval(this.interval)
-        }
-      },
-
-      minutes() {
-        if (this.minutes === 60) {
-          this.minutes = 0
-          this.hours += 1
-        }
-      },
-
-      seconds() {
-        if (this.seconds === 60) {
-          this.seconds = 0
-          this.minutes += 1
+          this.stopBefore = Date.now()
         }
       }
-    },
-
-     mounted() {
-      if (this.timeSet) {
-        this.hours = this.timeSet[0]
-        this.minutes = this.timeSet[1]
-        this.seconds = this.timeSet[2]
-      }
-  }
-
+    }
   }
 
 </script>
